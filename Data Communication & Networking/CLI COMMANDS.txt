@@ -1,0 +1,335 @@
+LAB 3( Transferring Packet)
+Continue with configuration dialog? [yes/no]: no
+Press RETURN to get started!
+Router>enable
+Router#configure terminal
+Router(config)#interface fastEthernet 0/0
+Router(config-if)#ip address 192.168.1.1 255.255.255.0
+Router(config-if)#no shutdown
+%LINK-5-CHANGED: Interface FastEthernet0/0, changed state to up
+%LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet0/0, changed state to up
+Router(config-if)#exit
+Router(config)#interface fastEthernet 0/1
+Router(config-if)#ip address 192.168.2.1 255.255.255.0
+Router(config-if)#no shutdown
+Router(config-if)#
+%LINK-5-CHANGED: Interface FastEthernet0/1, changed state to up
+%LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet0/1, changed state to up
+Router(config-if)#exit
+Router(config)#exit
+Router#
+%SYS-5-CONFIG_I: Configured from console by console
+Router#wr
+Building configuration...
+[OK] Router#
+
+
+LAB 4(DHCP)
+Continue with configuration dialog? [yes/no]: no
+Press RETURN to get started!
+Router>enable
+Router#configure terminal
+Enter configuration commands, one per line. End with CNTL/Z.
+Router(config)#interface fastEthernet 0/0
+Router(config-if)#ip address 192.168.1.1 255.255.255.0
+Router(config-if)#no shutdown
+%LINK-5-CHANGED: Interface FastEthernet0/0, changed state to up
+%LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet0/0, changed state to up
+Router(config-if)#exit
+Router(config)#ip dhcp pool ice
+Router(dhcp-config)#network 192.168.1.0 255.255.255.0
+Router(dhcp-config)#default-router 192.168.1.1
+Router(dhcp-config)#exit
+Router(config)#exit
+Router#
+%SYS-5-CONFIG_I: Configured from console by console
+Router#wr
+Building configuration...
+[OK]
+Router#
+
+LAB 5(RIP)
+   IP Configuration Router0:
+Would you like to enter the initial configuration dialog? [yes/no]: no
+Press RETURN to get started!
+Router>en
+Router#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#int gig0/0
+Router(config-if)#ip add 192.168.1.1 255.255.255.0
+Router(config-if)#no shut
+Router(config-if)#
+%LINK-5-CHANGED: Interface GigabitEthernet0/0, changed state to up
+Router(config-if)#exit
+Router(config)#int gig 0/1
+Router(config-if)#ip add 192.168.2.1 255.255.255.0
+Router(config-if)#no shut
+Router(config-if)#
+%LINK-5-CHANGED: Interface GigabitEthernet0/1, changed state to up
+%LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/1, changed state to up
+Router(config-if)#exit
+Router(config)#exit
+Router#
+%SYS-5-CONFIG_I: Configured from console by console
+   IP Configuration Router1:
+Would you like to enter the initial configuration dialog? [yes/no]: no
+Press RETURN to get started!
+Router>en
+Router#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#int gig 0/0
+Router(config-if)#ip add 192.168.1.2 255.255.255.0
+Router(config-if)#no shut
+Router(config-if)#
+%LINK-5-CHANGED: Interface GigabitEthernet0/0, changed state to up
+%LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/0, changed   state to up
+Router(config-if)#exit
+Router(config)#int gig 0/1
+Router(config-if)#ip add 192.168.3.1 255.255.255.0
+Router(config-if)#no shut
+Router(config-if)#
+%LINK-5-CHANGED: Interface GigabitEthernet0/1, changed state to up
+%LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/1, changed state to up
+Router(config-if)#exit
+Router(config)#exit
+Router#
+%SYS-5-CONFIG_I: Configured from console by console
+   RIP Configuration Router0:
+Router#conf t
+Enter configuration commands, one per line. End with CNTL/Z.
+Router(config)#router RIP
+Router(config-router)#version 2
+Router(config-router)#net 192.168.1.0
+Router(config-router)#net 192.168.2.0
+Router(config-router)#exit
+Router(config)#exit
+Router#
+%SYS-5-CONFIG_I: Configured from console by console
+Router#wr
+Building configuration... [OK]   
+   RIP Configuration Router1:
+Router#conf t
+Enter configuration commands, one per line. End with CNTL/Z.
+Router(config)#router RIP
+Router(config-router)#version 2
+Router(config-router)#net 192.168.1.0
+Router(config-router)#net 192.168.3.0
+Router(config-router)#exit
+Router(config)#exit
+Router#
+%SYS-5-CONFIG_I: Configured from console by console
+Router#wr
+Building configuration...
+[OK]
+
+LAB 6(OSPF)
+   IP Configuration Router0:
+Would you like to enter the initial configuration dialog? [yes/no]: no
+Press RETURN to get started!
+Router>en
+Router#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#int gig0/0
+Router(config-if)#ip add 192.168.1.1 255.255.255.0
+Router(config-if)#no shut
+Router(config-if)#
+%LINK-5-CHANGED: Interface GigabitEthernet0/0, changed state to up
+Router(config-if)#exit
+Router(config)#int gig 0/1
+Router(config-if)#ip add 192.168.2.1 255.255.255.0
+Router(config-if)#no shut
+Router(config-if)#
+%LINK-5-CHANGED: Interface GigabitEthernet0/1, changed state to up
+%LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/1, changed state to up
+Router(config-if)#exit
+Router(config)#exit
+Router#
+%SYS-5-CONFIG_I: Configured from console by console
+
+   IP Configuration Router1:
+Would you like to enter the initial configuration dialog? [yes/no]: no
+Press RETURN to get started!
+Router>en
+Router#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#int gig 0/0
+Router(config-if)#ip add 192.168.1.2 255.255.255.0
+Router(config-if)#no shut
+Router(config-if)#
+%LINK-5-CHANGED: Interface GigabitEthernet0/0, changed state to up
+%LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/0, changed   state to up
+Router(config-if)#exit
+Router(config)#int gig 0/1
+Router(config-if)#ip add 192.168.3.1 255.255.255.0
+Router(config-if)#no shut
+Router(config-if)#
+%LINK-5-CHANGED: Interface GigabitEthernet0/1, changed state to up
+%LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/1, changed state to up
+Router(config-if)#exit
+Router(config)#exit
+Router#
+%SYS-5-CONFIG_I: Configured from console by console
+  
+ OSPF configuration Router0:
+Router#conf t
+Enter configuration commands, one per line. End with CNTL/Z.
+Router(config)#router ospf 1
+Router(config-router)#network 192.168.1.0 0.0.0.255 area 0
+Router(config-router)#network 192.168.2.0 0.0.0.255 area 0
+Router(config-router)#exit
+Router(config)#exit
+Router#
+%SYS-5-CONFIG_I: Configured from console by console
+Router#wr
+Building configuration... [OK]
+
+   OSPF configuration Router1:
+Router#conf t
+Enter configuration commands, one per line. End with CNTL/Z.
+Router(config)#router ospf 1
+Router(config-router)#network 192.168.1.0 0.0.0.255 area 0 Router(config-router)#network 192.168.3.0 0.0.0.255 area 0 Router(config-router)#exit
+Router(config)#exit
+Router#
+%SYS-5-CONFIG_I: Configured from console by console
+Router#wr
+Building configuration... [OK]
+
+LAB 7(EIGRP}
+  IP Configuration Router0:
+Would you like to enter the initial configuration dialog? [yes/no]: no
+Press RETURN to get started!
+Router>enable
+Router#configure terminal
+Enter configuration commands, one per line. End with CNTL/Z.
+Router(config)#interface fastEthernet 0/0
+Router(config-if)#ip address 192.168.10.1 255.255.255.0 Router(config-if)#no shutdown
+Router(config-if)#
+%LINK-5-CHANGED: Interface FastEthernet0/0, changed state to up
+%LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet0/0, changed state to up
+Router(config-if)#exit
+Router(config)#interface serial 0/0/0
+Router(config-if)#ip address 192.168.20.1 255.255.255.0
+Router(config-if)#clock rate 128000
+Router(config-if)#no shutdown
+%LINK-5-CHANGED: Interface Serial0/0/0, changed state to down
+Router(config-if)#exit
+Router(config)#exit
+Router#
+%SYS-5-CONFIG_I: Configured from console by console
+Router#copy running-config startup-config
+Destination filename [startup-config]?
+Building configuration...
+[OK]
+   
+ IP Configuration Router1:
+Would you like to enter the initial configuration dialog? [yes/no]: no
+Press RETURN to get started!
+Router>enable
+Router#configure terminal
+Enter configuration commands, one per line. End with CNTL/Z.
+Router(config)#interface fastEthernet 0/0
+Router(config-if)#ip address 192.168.30.1 255.255.255.0
+Router(config-if)#no shutdown
+Router(config-if)#
+%LINK-5-CHANGED: Interface FastEthernet0/0, changed state to up
+%LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet0/0, changed state to up
+Router(config-if)#exit
+Router(config)#interface serial 0/0/0
+Router(config-if)#ip address 192.168.20.2 255.255.255.0
+Router(config-if)#no shutdown
+Router(config-if)#
+%LINK-5-CHANGED: Interface Serial0/0/0, changed state to up
+Router(config-if)#exit
+Router(config)#exit
+Router#
+%SYS-5-CONFIG_I: Configured from console by console
+Router#
+%LINEPROTO-5-UPDOWN: Line protocol on Interface Serial0/0/0, changed state to up
+Router#copy running-config startup-config
+Destination filename [startup-config]?
+Building configuration...
+[OK]
+
+    EIGRP Configuration Router0:
+Router#configure terminal
+Enter configuration commands, one per line. End with CNTL/Z.
+Router(config)#router eigrp 10
+Router(config-router)#network 192.168.10.0 255.255.255.0
+Router(config-router)#network 192.168.20.0 255.255.255.0
+Router(config-router)#exit
+Router(config)#exit
+Router#
+%SYS-5-CONFIG_I: Configured from console by console
+Router#copy running-config startup-config
+Destination filename [startup-config]?
+Building configuration...
+[OK]
+
+
+    EIGRP Configuration Router1:
+Router#configure terminal
+Enter configuration commands, one per line. End with CNTL/Z.
+Router(config)#router eigrp 10
+Router(config-router)#network 192.168.20.0 255.255.255.0
+Router(config-router)#
+%DUAL-5-NBRCHANGE: IP-EIGRP 10: Neighbor 192.168.20.1 (Serial0/0/0) is up: new
+adjacency
+Router(config-router)#network 192.168.30.0 255.255.255.0
+Router(config-router)#exit
+Router(config)#exit
+Router#
+%SYS-5-CONFIG_I: Configured from console by console
+Router#copy running-config st
+Router#copy running-config startup-config
+Destination filename [startup-config]?
+Building configuration...
+[OK]
+
+LAB8(VLAN)
+Switch>en
+Switch#configure terminal
+Enter configuration commands, one per line. End with CNTL/Z.
+Switch(config)#vlan 10
+Switch(config-vlan)#name IT
+Switch(config-vlan)#exit
+Switch(config)#vlan 20
+Switch(config-vlan)#name HR
+Switch(config-vlan)#exit
+Switch(config)#interface fastEthernet 0/1
+Switch(config-if)#switchport access vlan 10
+Switch(config-if)#exit
+Switch(config)#interface fastEthernet 0/2
+Switch(config-if)#switchport access vlan 10
+Switch(config-if)#exit
+Switch(config)#interface fastEthernet 0/3
+Switch(config-if)#switchport access vlan 20
+Switch(config-if)#exit
+Switch(config)#interface fastEthernet 0/4
+Switch(config-if)#switchport access vlan 20
+Switch(config-if)#exit
+Switch(config)#%SPANTREE-2-RECV_PVID_ERR: Received 802.1Q BPDU on non trunk FastEthernet0/5 VLAN1.
+
+%SPANTREE-2-BLOCK_PVID_LOCAL: Blocking FastEthernet0/5 on VLAN0001. Inconsistent port type.
+
+
+%LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet0/5, changed state to down
+
+%LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet0/5, changed state to up
+
+Switch(config)#exit
+Switch#
+%SYS-5-CONFIG_I: Configured from console by console
+
+    Switch configuration: For Switch Configuration write down the
+     following CLI commands in each switch.
+Switch#configure terminal
+Enter configuration commands, one per line. End with CNTL/Z.
+Switch(config)#interface fastEthernet 0/5
+Switch(config-if)#switchport mode trunk
+Switch(config-if)#exit
+Switch(config)#interface range fastEthernet 0/1-4
+Switch(config-if-range)#switchport mode access
+Switch(config-if-range)#exit
+Switch(config)#exit
+Switch#
+%SYS-5-CONFIG_I: Configured from console by console
