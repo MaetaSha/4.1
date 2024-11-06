@@ -1,0 +1,311 @@
+lab 1(FDD)
+import math
+
+bw = 33000
+schannel_bw = 25
+
+print('Channel Bandwidth..')
+dup_ch_bw = 2 * schannel_bw
+t_ch = bw / dup_ch_bw
+print(f'Duplux Channel Bandwidth: {dup_ch_bw}')
+print('Total available channel:')
+print(t_ch)
+
+cc_bw = 1000
+t_cc = cc_bw / dup_ch_bw
+print('Total control channel:')
+print(t_cc)
+
+N = [4, 7, 12]
+
+for i in range(3):
+    ch = t_ch / N[i]
+    ch_per_cell = round(ch)
+    print(f'Channel per cell for N = {N[i]}:')
+    print(ch_per_cell)
+    
+    c = t_cc / N[i]
+    cc = round(c)
+    
+    v = (t_ch - t_cc) / N[i]
+    vc = round(v)
+    
+    print(f'Control channel: {cc}, Voice channel: {vc}')
+
+Lab(2)(frequency reuse factor clauster size)
+import numpy as np
+
+R_SI = 15
+io = 6
+n = [4, 3]
+
+for a in range(2):
+    N = 7
+    Q = np.sqrt(3 * N)
+    print('n:', n[a])
+    print('Frequency reuse factor:', Q)
+    SI = 10 * (np.log10((1 / io) * (Q ** n[a])))
+    print('Signal to interference ratio:', SI)
+
+    if SI < R_SI:
+        i, j = 2, 2
+        N = (i ** 2) + (i * j) + (j ** 2)
+        Q = np.sqrt(3 * N)
+        print('n:', n[a])
+        print('Frequency reuse factor:', Q)
+        SI1 = 10 * (np.log10((1 / io) * (Q ** n[a])))
+        print('Signal to interference ratio:', SI1)
+
+Lab 3(blocking probability)
+import numpy as np
+
+# Constants
+Gos = 0.5 / 100  # Blocking probability
+Au = 0.1         # Traffic intensity per user
+A = np.array([0.005, 1.13, 3.96, 11.1, 80.9])  # Traffic intensity per configuration
+c = np.array([1, 5, 10, 20, 100])              # Number of channels per configuration
+
+# Display the values
+print("Blocking probability:", Gos)
+print("Traffic intensity per user:", Au)
+print("Traffic intensity:", A)
+print("Channels:", c)
+
+# Calculate the number of users
+U = A / Au
+# Use floor rounding, except when the value is less than 1, to ensure at least 1 user
+u = np.where(U < 1, 1, np.floor(U))
+
+print("Number of users:", u.astype(int))
+
+lab4(urban area)
+# Constants
+blocking_p = 2 / 100  # Blocking probability
+lamda = 2             # Arrival rate
+H = 3 / 60            # Average call holding time in hours
+Au = lamda * H        # Traffic intensity per user
+
+# System A
+print("For System A")
+channel_a = 19
+cell_A = 394
+A = 12               # Total traffic in Erlangs
+# Calculate number of users in System A
+Ua = A / Au
+print("Number of users in System A:", Ua)
+# Calculate total number of subscribers in System A
+subscriber_A = Ua * cell_A
+print("Total number of subscribers in System A:", subscriber_A)
+# Market penetration for System A
+percentage_market_penetration_for_A = (subscriber_A / 2000000) * 100
+print("Percentage market penetration for System A:", percentage_market_penetration_for_A)
+
+# System B
+print("\nFor System B")
+channel_b = 57
+cell_B = 98
+Ab = 45              # Total traffic in Erlangs
+# Calculate number of users in System B
+Ub = Ab / Au
+print("Number of users in System B:", Ub)
+# Calculate total number of subscribers in System B
+subscriber_B = Ub * cell_B
+print("Total number of subscribers in System B:", subscriber_B)
+# Market penetration for System B
+percentage_market_penetration_for_B = (subscriber_B / 2000000) * 100
+print("Percentage market penetration for System B:", percentage_market_penetration_for_B)
+
+# System C
+print("\nFor System C")
+channel_c = 100
+cell_C = 49
+Ac = 88              # Total traffic in Erlangs
+# Calculate number of users in System C
+Uc = Ac / Au
+print("Number of users in System C:", Uc)
+# Calculate total number of subscribers in System C
+subscriber_C = Uc * cell_C
+print("Total number of subscribers in System C:", subscriber_C)
+# Market penetration for System C
+percentage_market_penetration_for_C = (subscriber_C / 2000000) * 100
+print("Percentage market penetration for System C:", percentage_market_penetration_for_C)
+
+# Total subscribers and market penetration across all systems
+Total_number_of_subscriber = subscriber_A + subscriber_B + subscriber_C
+Market_penetration_for_three_system = (Total_number_of_subscriber / 2000000) * 100
+
+print("\nTotal number of subscribers across all systems:", Total_number_of_subscriber)
+print("Market penetration for all three systems:", Market_penetration_for_three_system)
+
+lab5(certain city GOS)
+import math
+
+# Constants
+area = 1300                    # Total area
+radius = 4                     # Radius of each cell
+allocated_spectrum = 40000     # Total allocated spectrum in Hz
+channel_width = 60             # Width of each channel in Hz
+frequency_reuse_factor = 7     # Frequency reuse factor
+traffic_intensity_per_cell = 84  # Traffic intensity per cell
+traffic_per_user = 0.03         # Traffic per user in Erlangs
+
+# (a) Calculate number of cells that can cover the area
+each_cell_covers = math.floor(2.5981 * radius**2)
+number_of_cells = math.floor(area / each_cell_covers)
+print("(a) Number of cells:", number_of_cells)
+
+# (b) Calculate number of channels per cell
+number_of_channel_per_cell = math.floor(allocated_spectrum / (channel_width * frequency_reuse_factor))
+print("(b) Number of channels per cell:", number_of_channel_per_cell)
+
+# (c) Display traffic intensity per cell
+print("(c) Traffic intensity per cell:", traffic_intensity_per_cell)
+
+# (d) Calculate maximum carried traffic
+maximum_carried_traffic = number_of_cells * traffic_intensity_per_cell
+print("(d) Maximum carried traffic:", maximum_carried_traffic)
+
+# (e) Calculate total number of users
+total_number_of_user = maximum_carried_traffic / traffic_per_user
+print("(e) Total number of users:", total_number_of_user)
+
+# (f) Calculate number of mobiles per channel
+number_of_channels = number_of_channel_per_cell * frequency_reuse_factor
+number_of_mobile_per_channel = math.floor(total_number_of_user / number_of_channels)
+print("(f) Number of mobiles per channel:", number_of_mobile_per_channel)
+
+# (g) Theoretical maximum number of users that could be served
+theoretical_maximum_number_of_users = number_of_cells * number_of_channel_per_cell
+print("(g) Theoretical maximum number of users that could be served:", theoretical_maximum_number_of_users)
+
+
+lab6(transmitted power unity gain)
+import math
+
+# Constants
+pt = 50                    # Transmitted power in Watts
+fc = 900                   # Carrier frequency in MHz
+gt = 1                     # Transmitter antenna gain
+gr = 1                     # Receiver antenna gain
+d = 100                    # Free space distance in meters
+L = 1                      # System loss
+c = 3 * 10**8             # Speed of light in m/s
+
+# Wavelength calculation
+lambda_ = c / (fc * 10**6)  # lambda = c/f = 1/3
+
+# Question (a) - Transmitter power in dBm
+tr_dBm = math.ceil(10 * math.log10(pt * 1000))
+print(f'(a) Transmitter power, Pt in dBm: {tr_dBm} dBm\n')
+
+# Question (b) - Transmitter power in dBW
+tr_dBW = math.ceil(10 * math.log10(pt))
+print(f'(b) Transmitter power, Pt in dBW: {tr_dBW} dBW\n')
+
+# Question (c) - Received power in dBm
+c_received = (pt * gt * gr * (lambda_ ** 2) / ((4 * math.pi) ** 2 * d ** 2 * L)) * 1000
+Pr = 10 * math.log10(c_received)
+print(f'(c) Received power, Pr in dBm: {Pr:.2f} dBm\n')
+
+# Question (d) - Received power at 10 km in dBm
+d_10km = Pr + (20 * math.log10(10 * 1000))  # Convert 10 km to meters
+print(f'(d) Received power, Pr at 10 km in dBm: {d_10km:.2f} dBm\n')
+
+lab7(path loss large city)
+import math
+
+# Constants
+hte = 100  # Effective transmitter (base station) antenna height in meters
+hre = 2    # Effective receiver (mobile) antenna height in meters
+fc = 900   # Frequency in MHz
+d = 4      # T-R separation distance in kilometers
+
+# Correction factor using the Okumura-Hata model
+a_hre = (3.2 * (math.log10(11.75 * hre)) ** 2) - 4.97
+
+# Path Loss in urban areas
+Lp = 69.55 + 26.16 * math.log10(fc) - 13.82 * math.log10(hte) - a_hre + \
+     ((44.9 - 6.55 * math.log10(hte)) * math.log10(d))
+
+print(f'The path loss in urban areas, Lp = {Lp:.2f} dB')
+
+lab 8(path loss between BS nad MS)
+import math
+
+# Constants
+fc = 1.8  # Frequency in GHz
+hb = 20   # Effective transmitter (base station) antenna height in meters
+
+# T-R separation distance in kilometers
+d = (math.sqrt(20**2 + 30**2)) / 1000  # Convert to kilometers
+
+# Path Loss in high-rise urban areas
+Lp = 135.41 + (12.49 * math.log10(fc)) - (4.99 * math.log10(hb)) + \
+     ((46.84 - 2.34 * math.log10(hb)) * math.log10(d))
+
+print(f'The path loss in high-rise urban areas, Lp = {Lp:.2f} dB')
+
+
+lab 9(carrier frequency mobile)
+import math
+
+# Constants
+f = 900  # Frequency in MHz
+g = 2.55  # Gain of antenna in dB
+
+# Question (a)
+gain = 10 ** (g / 10)  # Linear gain
+lemda = (3 * 10 ** 8) / (f * 10 ** 6)  # Wavelength
+L = lemda / 4  # Antenna Length
+
+print('For (a)')
+print('---------')
+print(f'Length of the antenna : {L:.3f} m')
+print(f'Gain of the antenna : {gain:.1f} = {g:.2f} dB\n')
+
+# Question (b)
+print('For (b)')
+print('---------')
+d = 5000  # T-R separation distance in meters
+E0 = 10 ** -3  # Electric-field in V/m
+d0 = 1000  # Transmitter distance in meters
+ht = 50  # Transmitting antenna height in meters
+hr = 1.5  # Receiving antenna height in meters
+
+# Calculating Electric Field
+Er_d = (2 * E0 * d0 * 2 * math.pi * ht * hr) / (lemda * d ** 2)  # Electric Field
+Ae = (gain * lemda ** 2) / (4 * math.pi)  # Effective Aperture
+Pr_d = (Er_d ** 2 / (120 * math.pi)) * Ae  # Received power at distance d
+Pr_dB = 10 * math.log10(Pr_d)  # Received power in dBW
+
+print(f'Electric Field, Er(d) : {Er_d:.9f} V/m')
+print(f'Effective Aperture, Ae : {Ae:.3f} m^2')
+print(f'Received power at 5km distance Er(5 km) : {Pr_dB:.3f} dBW')
+
+
+lab 10(hexagonal)
+import math
+
+# Constants
+R = 1.387  # Cell Radius
+n = 4  # Number of cells
+N = 60  # Total number of channels
+area = round(2.5981 * R**2)  # Area covered per cell
+C = N / 4  # Number of channels per cell
+A = 9  # Traffic intensity (from Erlang C chart)
+Au = 0.029  # Traffic per user
+
+# Question (a)
+U = math.floor(A / Au)  # Number of users
+U_per = round(U / area)  # Number of users per square km
+print(f"(a) Number of users per square km: {U_per} users/sq km\n")
+
+# Question (b)
+lamda = 1  # Lambda = 1 hour
+H = (Au / lamda) * 3600  # Holding Time (seconds)
+Prb = math.exp((-(C - A) * 10) / H)  # Probability for delayed call with t = 10s, C = 15, A = 9, H calculated
+print(f"(b) The probability that a delayed call will have to wait: {Prb * 100:.2f}%\n")
+
+# Question (c)
+Prc = 0.05 * Prb * 100  # 5% probability of delayed call
+print(f"(c) The probability that a call will be delayed: {Prc:.2f}%\n")
