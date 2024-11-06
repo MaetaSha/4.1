@@ -1,0 +1,33 @@
+import math
+
+# Required parameters
+required_sir = 15  # Minimum required S/I in dB
+i0 = 6             # Number of co-channel interfering cells
+
+# Cluster sizes and frequency reuse factors (Q)
+cluster_data = [
+    {"N": 3, "Q": 3},
+    {"N": 7, "Q": 4.58},
+    {"N": 12, "Q": 6},
+    {"N": 13, "Q": 6.24}
+]
+
+# Part (a): Path loss exponent n = 4
+n = 4
+for data in cluster_data:
+    Q = data["Q"]
+    N = data["N"]
+    sir = 10 * math.log10((Q ** n) / i0)
+    if sir >= required_sir:
+        print(f"Part (a): For n = {n}, the minimum cluster size N is {N} with S/I = {sir:.2f} dB.")
+        break
+
+# Part (b): Path loss exponent n = 3
+n = 3
+for data in cluster_data:
+    Q = data["Q"]
+    N = data["N"]
+    sir = 10 * math.log10((Q ** n) / i0)
+    if sir >= required_sir:
+        print(f"Part (b): For n = {n}, the minimum cluster size N is {N} with S/I = {sir:.2f} dB.")
+        break
