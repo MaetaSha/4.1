@@ -1,1 +1,77 @@
+https://chatgpt.com/share/6733baaf-10bc-8005-bcfb-70afc267f5db
+
+//hill ashik
+
+keyMatrix = [[0] * 3 for i in range(3)]
+messageVector = [[0] for i in range(3)]
+cipherMatrix = [[0] for i in range(3)]
+def getKeyMatrix(key):
+    k = 0
+    for i in range(3):
+        for j in range(3):
+            keyMatrix[i][j] = ord(key[k]) % 65  
+            k += 1
+def encrypt(messageVector):
+    for i in range(3):
+        for j in range(1):
+            cipherMatrix[i][j] = 0
+            for x in range(3):
+                cipherMatrix[i][j] += (keyMatrix[i][x] * messageVector[x][j])
+            cipherMatrix[i][j] = cipherMatrix[i][j] % 26  
+def HillCipher(message, key):
+    if len(message) != 3:
+        raise ValueError("Message length must be 3 for this implementation.")
+    getKeyMatrix(key)
+    for i in range(3):
+        messageVector[i][0] = ord(message[i]) % 65
+    encrypt(messageVector)
+    CipherText = []
+    for i in range(3):
+        CipherText.append(chr(cipherMatrix[i][0] + 65))  # Convert number back to character
+    print("Ciphertext: ", "".join(CipherText))
+def main():
+    message = "ASH"  # You can change this message
+    print("Input message:", message)
+    key = "ASHIKRAHM"      
+print("Key:", key
+    HillCipher(message, key)
+if __name__ == "__main__":
+    main()
+
+
+
+//sajeeb hill
+from sympy import Matrix
+
+
+def get_key_matrix(key):
+    return Matrix(3, 3, [ord(char) % 65 for char in key])
+
+
+def hill_encrypt(message, key):
+    message_vector = Matrix([ord(char) % 65 for char in message])
+    cipher_vector = (key * message_vector) % 26
+    ciphertext = "".join(chr(int(num) + 65) for num in cipher_vector)
+    return ciphertext
+
+
+def hill_decrypt(ciphertext, key):
+    key_inv = key.inv_mod(26)  # Get modular inverse of the key matrix
+    cipher_vector = Matrix([ord(char) % 65 for char in ciphertext])
+    message_vector = (key_inv * cipher_vector) % 26
+    decrypted_message = "".join(chr(int(num) + 65) for num in message_vector)
+    return decrypted_message
+
+
+# Example usage
+message = "SAJ"
+key = "ABCDEGFGH"
+key_matrix = get_key_matrix(key)
+
+ciphertext = hill_encrypt(message, key_matrix)
+print("Ciphertext:", ciphertext)
+
+decrypted_message = hill_decrypt(ciphertext, key_matrix)
+print("Decrypted Message:", decrypted_message)
+
 
